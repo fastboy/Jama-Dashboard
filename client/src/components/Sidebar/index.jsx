@@ -295,12 +295,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       to="/tasks" />
                   }
 
-                  <SidebarLinkItem
-                    icon={<MdMenuBook />}
-                    active={pathname === '/page'}
-                    text="Notes"
-                    to="/page" />
-
                   {
                     userData?.authenticator && <SidebarButtonItem
                       id="btnAuth"
