@@ -50,6 +50,19 @@ To view startup logs:
 docker compose logs --tail=200
 ```
 
+### Portainer/Dockhand: `Dockerfile: no such file or directory`
+
+The repository contains a root-level `Dockerfile`. This error usually means that the Compose YAML was pasted into a web editor, so `build.context: .` points to a temporary directory containing only the Compose file. Docker cannot find the rest of the project there.
+
+There are two reliable deployment methods:
+
+1. **Build on the Docker host over SSH** — clone the repository, enter its directory and run `./setup-env.sh` followed by `docker compose up -d --build`. The `Dockerfile`, `client/` and `server/` directories must be present beside `docker-compose.yml`.
+2. **Use a prebuilt image in Portainer/Dockhand** — build the image on a machine with Docker, publish it to a registry or load it onto the target host, then replace the `build:` block with an explicit `image:` reference in the Compose file.
+
+Portainer documents that Compose build steps are not supported for remote Docker environments in current versions. For such environments, an external image build is the stable approach; a pasted Compose file alone cannot provide the Dockerfile or application source. citeturn656919search0turn656919search6
+
+If using Portainer's Git repository deployment, configure the repository, branch `dev` and Compose file path instead of pasting only the YAML. Still verify whether the Portainer environment is local or remote and whether it supports building from Compose before deploying.
+
 ### Manual `.env` setup
 
 If you prefer to create the file yourself:
