@@ -83,6 +83,20 @@ MONGODB_URI=mongodb://127.0.0.1:27017/jama-dashboard
 
 Keep `.env` private. Never commit it or paste its `SECRET_KEY` into a public issue, repository or chat.
 
+### Running a second instance on the same Docker host
+
+The default stack uses application port `8000` and MongoDB host port `27017`. For another instance, add these variables in Dockhand's **Environment variables** section or to that instance's `.env` file:
+
+```dotenv
+APP_PORT=8001
+MONGODB_PORT=27018
+MONGODB_URI=mongodb://127.0.0.1:27018/jama-dashboard-test
+APP_CONTAINER_NAME=jama-dashboard-test
+MONGO_CONTAINER_NAME=jama-dashboard-test_mongodb
+```
+
+Then open the second dashboard at `http://<docker-host>:8001`. Use a different Dockhand stack name as well. The two instances will have separate Compose-managed volumes because the stack names are different.
+
 ### Portainer, Dockhand and other web panels
 
 When deploying the Compose file as a Stack/Application, add the variable in the panel's environment-variable section before pressing **Deploy**:
@@ -90,6 +104,8 @@ When deploying the Compose file as a Stack/Application, add the variable in the 
 ```text
 SECRET_KEY = a-long-random-value-generated-on-your-computer
 ```
+
+For a second instance, add `APP_PORT`, `MONGODB_PORT`, `MONGODB_URI`, `APP_CONTAINER_NAME` and `MONGO_CONTAINER_NAME` in the same section. These values are interpolated by Compose; changing only `container_name` does not change the ports.
 
 Generate the value locally with either:
 
