@@ -4,21 +4,22 @@ import { motion } from 'framer-motion';
 import { GiNotebook } from "react-icons/gi";
 import ApiService from '../../utils/ApiService';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { changedPageState, deletePageModalState, loadingState, loginState, publishPageModalState } from '../../atoms';
+import { changedPageState, deletePageModalState, loadingState, loginState } from '../../atoms';
 import DeletePageModal from '../Modals/DeletePageModal';
 import useDynamicFilter from '../../hooks/useDynamicFilter';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
 import useCurrentRoute from '../../hooks/useCurrentRoute';
-import ManagePublishPageModal from '../Modals/ManagePublishPageModal';
+
 import SinglePageItem from './SinglePageItem';
 import NoListing from '../Misc/NoListing';
 import makeToast from '../../utils/ToastUtils';
 import NiceLink from '../NiceViews/NiceLink';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const PageList = () => {
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [pageList, setPageList] = useState([]);
 
@@ -26,11 +27,11 @@ const PageList = () => {
   const loginData = useRecoilValue(loginState);
 
   const setPageDelete = useSetRecoilState(deletePageModalState);
-  const setPublishPageModal = useSetRecoilState(publishPageModalState);
+
   const [changedPage, setChangedPage] = useRecoilState(changedPageState);
 
   useDynamicFilter(false);
-  useCurrentRoute("/manage/page");
+  useCurrentRoute(location.pathname.startsWith('/manage') ? "/manage/page" : "/page");
 
   useEffect(() => {
     setLoading(true);
@@ -54,24 +55,21 @@ const PageList = () => {
     setPageDelete({ isOpen: true, data: { pageId } });
   }
 
-  const managePublish = (pageId, isPublished) => {
-    setPublishPageModal({ isOpen: true, data: { pageId, isPublished } });
-  }
 
   return (
     <>
       <DeletePageModal />
-      <ManagePublishPageModal />
+
       <Helmet>
-        <title>Pages</title>
+        <title>Notes</title>
       </Helmet>
 
-      <Breadcrumb type="custom" pageTitle={"Pages"} breadcrumbList={[{ "id": "1", "linkName": "Settings", "linkUrl": "/manage" }]} />
+      <Breadcrumb type="custom" pageTitle={"Notes"} breadcrumbList={[{ "id": "1", "linkName": "Dashboard", "linkUrl": "/" }]} />
 
       <div className="flex flex-col justify-between">
         <div className="text-left w-full md:w-auto" />
         <div className="flex flex-wrap justify-end space-x-2 mt-4 md:mt-0">
-          <NiceLink label="Add Page"
+          <NiceLink label="Add Note"
             className="bg-buttonGeneric text-buttonText"
             to="/manage/page/add" />
         </div>
@@ -87,12 +85,12 @@ const PageList = () => {
             <>
               {
                 pageList.map(page => (
-                  <SinglePageItem key={page._id} page={page} deletePage={deletePage} managePublish={managePublish} />
+                  <SinglePageItem key={page._id} page={page} deletePage={deletePage} />
                 ))
               }
             </>
           ) : (
-            <NoListing mainText="Oops! Nothing to List here" subText="Please create some pages first" buttonText="Go to home" buttonLink="/" displayIcon={<GiNotebook />} />
+            <NoListing mainText="No notes yet" subText="Create your first note" buttonText="Go to dashboard" buttonLink="/" displayIcon={<GiNotebook />} />
           )}
         </div>
       </motion.div>

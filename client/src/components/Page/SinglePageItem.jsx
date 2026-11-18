@@ -4,7 +4,7 @@ import NiceLink from '../NiceViews/NiceLink';
 import NiceButton from '../NiceViews/NiceButton';
 import PropTypes from 'prop-types';
 
-const SinglePageItem = ({ page, deletePage, managePublish }) => {
+const SinglePageItem = ({ page, deletePage }) => {
   return (
     <motion.div
       initial={{ x: -100, opacity: 0 }}
@@ -17,6 +17,11 @@ const SinglePageItem = ({ page, deletePage, managePublish }) => {
       </div>
       <div className="flex space-x-2 mt-2 md:mt-0 ml-auto">
         <NiceLink
+          label='Open'
+          className="bg-buttonInfo text-buttonText"
+          to={`/p/${page._id}`}
+        />
+        <NiceLink
           label='Edit'
           className="bg-buttonSuccess text-buttonText"
           to={`/manage/page/${page._id}`}
@@ -26,11 +31,7 @@ const SinglePageItem = ({ page, deletePage, managePublish }) => {
           className="bg-buttonDanger text-buttonText"
           onClick={() => deletePage(page._id)}
         />
-        <NiceButton
-          label={page.isPublished ? 'Unpublish' : 'Publish'}
-          className='bg-buttonInfo text-buttonText'
-          onClick={() => managePublish(page._id, page.isPublished)}
-        />
+
       </div>
     </motion.div>
   );
@@ -41,7 +42,6 @@ SinglePageItem.displayName = 'SinglePageItem';
 SinglePageItem.propTypes = {
   page: PropTypes.object.isRequired,
   deletePage: PropTypes.func.isRequired,
-  managePublish: PropTypes.func.isRequired
 };
 
 

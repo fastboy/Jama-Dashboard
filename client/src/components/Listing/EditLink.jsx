@@ -32,12 +32,11 @@ const EditLink = () => {
     const [linkName, setLinkName] = useState("");
     const [linkURL, setLinkURL] = useState("");
     const [localUrl, setLocalUrl] = useState("");
-    const [showInSidebar, setShowInSidebar] = useState(false);
     const [showOnFeatured, setShowOnFeatured] = useState(!parentId ? true : false);
     const [integrationList, setIntegrationList] = useState([]);
-    const [pageList, setPageList] = useState([]);
+    const [folderList, setFolderList] = useState([]);
     const [haveRemoteUrl, setHaveRemoteUrl] = useState(false);
-    const [selectedPage, setSelectedPage] = useState("");
+    const [selectedFolder, setSelectedFolder] = useState(parentId || "");
     const [selectedIntegration, setSelectedIntegration] = useState(null);
     const [integrationConfig, setIntegrationConfig] = useState({});
     const [connectionStatus, setConnectionStatus] = useState(null);
@@ -61,8 +60,8 @@ const EditLink = () => {
                     setLinkName(data?.message?.listing?.listingName || "");
                     setLinkURL(data?.message?.listing?.listingUrl || "");
                     setLocalUrl(data?.message?.listing?.localUrl || "");
-                    setShowInSidebar(data?.message?.listing?.inSidebar);
                     setShowOnFeatured(data?.message?.listing?.onFeatured);
+                    setSelectedFolder(data?.message?.listing?.parentId || parentId || "");
                     //setDisabledFeatured(data?.message?.listing?.parentId ? false : true);
 
                     if (data?.message?.listing?.integration) {
@@ -83,13 +82,6 @@ const EditLink = () => {
                         setHaveRemoteUrl(true);
                     }
 
-                    if (data?.message?.listing?.listingUrl?.startsWith("/p/") && !data?.message?.listing?.localUrl) {
-                        const pid = data?.message?.listing?.listingUrl?.split("/")[2];
-                        if (data?.message?.pages?.find(page => page._id === pid)) {
-                            setSelectedPage(pid);
-                            setHaveRemoteUrl(false);
-                        }
-                    }
                 } else {
                     setSelectedImage({
                         image: {
@@ -101,14 +93,13 @@ const EditLink = () => {
                     setLinkName("");
                     setLinkURL("");
                     setLocalUrl("");
-                    setShowInSidebar(false);
                     setShowOnFeatured(!parentId ? true : false);
                     setFolderReloadStatus(true);
                     setSelectedIntegration("");
-                    setSelectedPage("");
+                    setSelectedFolder(parentId || "");
                 }
 
-                setPageList(data?.message?.pages);
+                setFolderList(data?.message?.folders || []);
             })
             .catch((error) => {
                 if (!error.handled) makeToast("error", "Failed to fetch link details.");
@@ -121,7 +112,7 @@ const EditLink = () => {
         let remoteUrl = linkURL;
         if (!haveRemoteUrl) remoteUrl = "";
 
-        if (!linkName && !(remoteUrl || selectedPage || localUrl)) {
+        if (!linkName && !(remoteUrl || localUrl)) {
             makeToast("warning", "Please fill all the fields");
             return;
         }
@@ -140,16 +131,13 @@ const EditLink = () => {
             }
         }
 
-        const tempLink = selectedPage ? `/p/${selectedPage}` : (haveRemoteUrl ? remoteUrl : "");
-
         const postData = {
             listingId,
-            parentId,
+            parentId: selectedFolder || parentId || null,
             linkName,
             linkIcon: selectedImage?.image,
-            linkURL: tempLink,
+            linkURL: haveRemoteUrl ? remoteUrl : "",
             localUrl,
-            showInSidebar,
             showOnFeatured,
             integration: !selectedIntegration ? null : {
                 package: selectedIntegration?.appId,
@@ -164,7 +152,6 @@ const EditLink = () => {
                 setLinkName("");
                 setLinkURL("");
                 setLocalUrl("");
-                setShowInSidebar(false);
                 setShowOnFeatured(false);
                 setFolderReloadStatus(true);
                 setSelectedIntegration("");
@@ -179,12 +166,7 @@ const EditLink = () => {
             });
     };
 
-    const setPageSelection = (value) => {
-        setSelectedPage(value);
-        setLocalUrl("");
-        setLinkURL("");
-        setHaveRemoteUrl(false);
-    };
+    const setFolderSelection = (value) => setSelectedFolder(value);
 
     const configureApplication = (e) => {
         const selectedAppId = e.target.value;
@@ -286,41 +268,35 @@ const EditLink = () => {
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                            {!selectedPage && (
-                                <div className="col-span-1">
-                                    <NiceInput
-                                        label="Local URL"
-                                        className='border bg-inputBg border-inputBorder text-inputText placeholder-inputPlaceholder'
-                                        value={localUrl}
-                                        onChange={(e) => {
-                                            setLocalUrl(e.target.value);
-                                            setSelectedPage("");
-                                        }}
-                                    />
-                                </div>
-                            )}
+                            <div className="col-span-1">
+                                <NiceInput
+                                    label="Local URL"
+                                    className='border bg-inputBg border-inputBorder text-inputText placeholder-inputPlaceholder'
+                                    value={localUrl}
+                                    onChange={(e) => setLocalUrl(e.target.value)}
+                                />
+                            </div>
 
-                            <div className={`col-span-1 ${selectedPage ? 'sm:col-span-2' : ''}`}>
-                                <label className="block mb-2" htmlFor="selectPage">
-                                    Select Page
+                            <div className="col-span-1">
+                                <label className="block mb-2" htmlFor="selectFolder">
+                                    Select Folder
                                 </label>
                                 <select
                                     className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-inputBg border-inputBorder text-inputText"
-                                    id="selectPage"
-                                    value={selectedPage}
-                                    onChange={(e) => setPageSelection(e.target.value)}
+                                    id="selectFolder"
+                                    value={selectedFolder}
+                                    onChange={(e) => setFolderSelection(e.target.value)}
                                 >
-                                    <option value="">Select a page</option>
-                                    {pageList?.map((page, index) => (
-                                        <option key={index} value={page?._id}>{page.pageTitle}</option>
+                                    <option value="">No folder</option>
+                                    {folderList?.map((folder) => (
+                                        <option key={folder?._id} value={folder?._id}>{folder.listingName}</option>
                                     ))}
                                 </select>
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                            {!selectedPage && (
-                                <div>
+                            <div>
                                     <NiceCheckbox
                                         label='Have Remote URL'
                                         checked={haveRemoteUrl}
@@ -339,15 +315,13 @@ const EditLink = () => {
                                                 value={linkURL}
                                                 onChange={(e) => {
                                                     setLinkURL(e.target.value);
-                                                    setSelectedPage("");
                                                 }}
                                             />
                                         </div>
                                     )}
-                                </div>
-                            )}
+                            </div>
 
-                            <div className={selectedPage ? 'sm:col-span-1' : ''}>
+                            <div>
                                 <label className="block mb-2" htmlFor="integrationApp">
                                     Visibility
                                 </label>
@@ -359,11 +333,7 @@ const EditLink = () => {
                                             onChange={(e) => setShowOnFeatured(e.target.checked)}
                                         />
                                     )}
-                                    <NiceCheckbox
-                                        label='Show in sidebar'
-                                        checked={showInSidebar}
-                                        onChange={(e) => setShowInSidebar(e.target.checked)}
-                                    />
+
                                 </div>
                             </div>
                         </div>

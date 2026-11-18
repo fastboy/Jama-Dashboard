@@ -55,8 +55,8 @@ const Settings = () => {
         },
         {
             id: 4,
-            title: 'Pages',
-            description: 'Create and publish information packed pages',
+            title: 'Notes',
+            description: 'Create and manage your notes',
             icon: <MdMenuBook />,
             show: true,
             route: '/manage/page'

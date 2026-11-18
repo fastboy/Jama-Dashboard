@@ -139,7 +139,7 @@ const App = () => {
                             <Route key={Math.random()} path="/t/:listingid" element={<TodoListing />} />
                             <Route key={Math.random()} path="/s/:listingid" element={<SnippetListing />} />
                             <Route key={Math.random()} path="/p/:pageId" element={<ViewPage />} />
-                            <Route key={Math.random()} path="/page" element={<CategoryListing />} />
+                            <Route key={Math.random()} path="/page" element={<PageList />} />
                             <Route key={Math.random()} path="/tasks" element={<TodoListing />} />
                             <Route key={Math.random()} path="/streaming" element={<StreamListing />} />
                             <Route key={Math.random()} path="/snippet" element={<SnippetListing />} />

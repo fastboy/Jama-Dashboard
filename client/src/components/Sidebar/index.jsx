@@ -4,20 +4,19 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { motion } from 'framer-motion';
 import { BsAppIndicator } from "react-icons/bs";
 import { MdOutlineImportantDevices, MdSmartDisplay, MdFace, MdMenuBook, MdListAlt, MdDashboardCustomize, MdContactSupport } from "react-icons/md";
-import { FaGlobeAsia, FaRegListAlt, FaHome, FaCloudSunRain, FaTshirt, FaIcons, FaUserCircle } from "react-icons/fa";
+import { FaRegListAlt, FaHome, FaCloudSunRain, FaTshirt, FaIcons, FaUserCircle } from "react-icons/fa";
 import { IoSettingsSharp, IoQrCode } from "react-icons/io5";
 import SidebarButtonItem from './SidebarButtonItem';
 import SidebarLinkItem from './SidebarLinkItem';
-import { isLocal } from '../../utils/Helper';
+
 import PropTypes from 'prop-types';
-import { activeRouteState, authenticatorPanelState, sidebarItemState, userDataState, sidebarExpandedState, isHostModeState, colorThemeState } from '../../atoms';
+import { activeRouteState, authenticatorPanelState, userDataState, sidebarExpandedState, isHostModeState, colorThemeState } from '../../atoms';
 import packageJson from '../../../package.json';
 import BuyMeACoffee from '../BuyMeACoffee';
 import SystemThemes from '../../utils/SystemThemes';
 import ImageView from '../Misc/ImageView';
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
-  const sidebarItems = useRecoilValue(sidebarItemState);
   const userData = useRecoilValue(userDataState);
 
   const colorTheme = useRecoilValue(colorThemeState);
@@ -77,27 +76,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     }
   }, [sidebarExpanded, setStoredSidebarExpanded]);
 
-  const decideTheLink = (singleItem) => {
-    // Check the hostname
-    const hostname = window.location.hostname;
-
-    let url = singleItem.listingUrl;
-
-    if (singleItem.listingType === "category") {
-      url = `/c/${singleItem._id}`;
-    } else if (singleItem.listingType === "todo") {
-      url = `/t/${singleItem._id}`;
-    } else if (singleItem.listingType === "snippet") {
-      url = `/s/${singleItem._id}`;
-    } else {
-      if (isLocal(hostname)) {
-        url = singleItem.localUrl || singleItem.listingUrl;
-      } else {
-        url = singleItem.listingUrl;
-      }
-    }
-    return url;
-  }
 
   const decideTheIcon = useCallback(() => {
     const iconObject = userData?.siteLogo;
@@ -164,24 +142,25 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             <ul className="mb-6 flex flex-col gap-1.5">
               {
                 !pathname.startsWith('/manage') ?
-                  sidebarItems?.map((singleItem) => {
-                    const route = decideTheLink(singleItem);
-                    const isActive = route === activeRoute ? true : false;
+                  <>
+                    <SidebarLinkItem
+                      icon={<FaHome />}
+                      active={activeRoute === '/'}
+                      text="Dashboard"
+                      to="/" />
 
-                    const icon = route === "/" ? <FaHome /> : <BsAppIndicator />;
-                    return <SidebarLinkItem
-                      key={singleItem?._id}
-                      active={isActive}
-                      icon={icon}
-                      text={singleItem?.listingName}
-                      to={route} />
-                  })
+                    <SidebarLinkItem
+                      icon={<MdMenuBook />}
+                      active={activeRoute === '/page'}
+                      text="Notes"
+                      to="/page" />
+                  </>
                   :
                   <>
                     <SidebarLinkItem
                       icon={<FaHome />}
                       active={activeRoute === '/'}
-                      text="Site Front"
+                      text="Dashboard"
                       to="/" />
 
                     <SidebarLinkItem
@@ -204,7 +183,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
                     <SidebarLinkItem
                       icon={<MdMenuBook />}
-                      text="Pages"
+                      text="Notes"
                       active={activeRoute === '/manage/page'}
                       to="/manage/page" />
 
@@ -316,14 +295,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       to="/tasks" />
                   }
 
-                  {
-                    activeRoute === '/page' && <SidebarButtonItem
-                      id="page"
-                      icon={<FaGlobeAsia />}
-                      active
-                      text="Pages"
-                    />
-                  }
+                  <SidebarLinkItem
+                    icon={<MdMenuBook />}
+                    active={pathname === '/page'}
+                    text="Notes"
+                    to="/page" />
 
                   {
                     userData?.authenticator && <SidebarButtonItem

@@ -2,7 +2,6 @@ const Listing = require("../models/Listing");
 const App = require("../models/App");
 const stream = require('stream');
 const { spawn } = require('child_process');
-const Page = require("../models/Page");
 const mongoose = require('mongoose');
 const { isValidStream } = require("../utils/apiutils");
 const fs = require('fs');
@@ -10,7 +9,7 @@ const path = require('path');
 
 exports.saveFolder = async (req, res) => {
     const userId = req.user._id;
-    let { parentId, listingId, folderName, folderIcon, folderURL, showInSidebar, showOnFeatured } = req.body;
+    let { parentId, listingId, folderName, folderIcon, folderURL, showOnFeatured } = req.body;
 
     if (listingId === 'undefined') listingId = null;
 
@@ -34,7 +33,7 @@ exports.saveFolder = async (req, res) => {
                 parentFolder.listingName = folderName;
                 parentFolder.listingIcon = folderIcon;
                 parentFolder.listingUrl = folderURL;
-                parentFolder.inSidebar = showInSidebar;
+                parentFolder.inSidebar = false;
                 parentFolder.onFeatured = showOnFeatured;
 
                 await parentFolder.save();
@@ -57,7 +56,7 @@ exports.saveFolder = async (req, res) => {
                 listingType: "category",
                 parentId,
                 onFeatured: showOnFeatured,
-                inSidebar: showInSidebar,
+                inSidebar: false,
                 userId
             });
 
@@ -95,11 +94,11 @@ exports.listingDetails = async (req, res) => {
             });
         }
 
-        // Find pages
-        const pages = await Page.find({
+        // Find folders available as parents for links
+        const folders = await Listing.find({
             userId,
-            isPublished: true
-        }).select('-pageContent'); // Exclude pageContent field
+            listingType: 'category'
+        }).sort({ listingName: 1 });
 
         //select apps from the db
         const appList = await App.find({ npmInstalled: 1 }).sort({ appName: 1 });
@@ -126,7 +125,7 @@ exports.listingDetails = async (req, res) => {
             error: false,
             message: {
                 integrations: apps,
-                pages,
+                folders,
                 listing
             }
         });
@@ -378,7 +377,7 @@ exports.manageListItems = async (req, res) => {
 
 exports.saveLink = async (req, res) => {
     const userId = req.user._id;
-    const { parentId, listingId, linkName, linkIcon, linkURL, localUrl, showInSidebar, showOnFeatured } = req.body;
+    const { parentId, listingId, linkName, linkIcon, linkURL, localUrl, showOnFeatured } = req.body;
     let integration = req.body.integration;
 
     if (!integration || integration === 'undefined' || integration === 'null') integration = null;
@@ -389,6 +388,14 @@ exports.saveLink = async (req, res) => {
             error: true,
             message: "All fields are required"
         });
+    }
+
+    const resolvedParentId = parentId || null;
+    if (resolvedParentId) {
+        const parentFolder = await Listing.exists({ _id: resolvedParentId, userId, listingType: 'category' });
+        if (!parentFolder) {
+            return res.status(400).json({ error: true, message: "Selected folder was not found." });
+        }
     }
 
     let integrationData = null;
@@ -421,8 +428,9 @@ exports.saveLink = async (req, res) => {
                     listingIcon: linkIcon,
                     listingUrl: linkURL,
                     localUrl,
+                    parentId: resolvedParentId,
                     onFeatured: showOnFeatured,
-                    inSidebar: showInSidebar,
+                    inSidebar: false,
                     integration: integrationData
                 },
                 { new: true }
@@ -446,9 +454,9 @@ exports.saveLink = async (req, res) => {
                 listingUrl: linkURL,
                 localUrl,
                 listingType: 'link',
-                parentId,
+                parentId: resolvedParentId,
                 onFeatured: showOnFeatured,
-                inSidebar: showInSidebar,
+                inSidebar: false,
                 userId,
                 integration: integrationData
             });

@@ -13,7 +13,7 @@ import JoditEditor from 'jodit-react';
 import NiceBack from '../NiceViews/NiceBack';
 import NiceForm from '../NiceViews/NiceForm';
 import NiceButton from '../NiceViews/NiceButton';
-import NiceCheckbox from '../NiceViews/NiceCheckbox';
+
 import NiceInput from '../NiceViews/NiceInput';
 import makeToast from '../../utils/ToastUtils';
 import SystemThemes from '../../utils/SystemThemes';
@@ -34,7 +34,7 @@ const EditPage = () => {
 
     const [pageTitle, setPageTitle] = useState("");
     const [pageContent, setPageContent] = useState("");
-    const [isPublished, setIsPublished] = useState(true);
+
 
     const colorTheme = useRecoilValue(colorThemeState);
     const [themeType, setThemeType] = useState("light");
@@ -66,11 +66,11 @@ const EditPage = () => {
                     if (data?.message) {
                         setPageTitle(data?.message?.pageTitle);
                         setPageContent(data?.message?.pageContent);
-                        setIsPublished(data?.message?.isPublished);
+
                     } else {
                         setPageTitle("");
                         setPageContent("");
-                        setIsPublished(true);
+
                     }
                 })
                 .catch((error) => {
@@ -93,13 +93,13 @@ const EditPage = () => {
 
         setLoading(true);
 
-        ApiService.post('/api/v1/page/save', { pageId, pageTitle, pageContent, publish: isPublished }, loginData?.token, navigate)
+        ApiService.post('/api/v1/page/save', { pageId, pageTitle, pageContent }, loginData?.token, navigate)
             .then(() => {
                 setPageTitle("");
                 setPageContent("");
                 makeToast("success", "Page saved.");
                 setReloadData(true);
-                setIsPublished(true);
+
                 navigate(-1);
             })
             .catch((error) => {
@@ -114,10 +114,10 @@ const EditPage = () => {
     return (
         <>
             <Helmet>
-                <title>{!pageId ? "Add a new page" : "Edit a page"}</title>
+                <title>{!pageId ? "Add a new note" : "Edit a note"}</title>
             </Helmet>
 
-            <Breadcrumb type="custom" pageTitle={!pageId ? "Add a new page" : "Edit a page"} breadcrumbList={[{ "id": "1", "linkName": "Settings", "linkUrl": "/manage" }, { "id": "2", "linkName": "Pages", "linkUrl": "/manage/page" }]} />
+            <Breadcrumb type="custom" pageTitle={!pageId ? "Add a new note" : "Edit a note"} breadcrumbList={[{ "id": "1", "linkName": "Settings", "linkUrl": "/manage" }, { "id": "2", "linkName": "Notes", "linkUrl": "/manage/page" }]} />
 
             <div className="max-w-4xl mx-auto w-full mt-4">
                 <div className="card border bg-cardBg text-cardText border-cardBorder shadow-md rounded-xl px-8 pt-6 pb-8 mb-4">
@@ -141,11 +141,7 @@ const EditPage = () => {
                                 onBlur={newContent => setPageContent(newContent)}
                             />
                         </div>
-                        <NiceCheckbox
-                            label='Publish'
-                            checked={isPublished}
-                            onChange={(e) => setIsPublished(e.target.checked)}
-                        />
+
                         <div className="flex justify-end">
                             <NiceBack />
 

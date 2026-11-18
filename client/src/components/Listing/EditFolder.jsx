@@ -33,7 +33,7 @@ const EditFolder = () => {
     const setReloadData = useSetRecoilState(reloadDashboardDataState);
 
     const [folderName, setFolderName] = useState("");
-    const [showInSidebar, setShowInSidebar] = useState(false);
+
     const [showOnFeatured, setShowOnFeatured] = useState(!parentId ? true : false);
 
     useDynamicFilter(false);
@@ -53,7 +53,7 @@ const EditFolder = () => {
             .then(data => {
                 if (data?.message?.listing) {
                     setFolderName(data?.message?.listing?.listingName);
-                    setShowInSidebar(data?.message?.listing?.inSidebar);
+
                     setShowOnFeatured(data?.message?.listing?.onFeatured);
 
                     if (data?.message?.listing?.listingIcon) {
@@ -72,7 +72,7 @@ const EditFolder = () => {
                         }
                     });
                     setFolderName("");
-                    setShowInSidebar(false);
+
                     setShowOnFeatured(false);
                     setFolderReloadStatus(true);
                 }
@@ -99,11 +99,11 @@ const EditFolder = () => {
         //Call the API to store the data
 
         setLoading(true);
-        ApiService.post('/api/v1/listing/save/folder', { listingId, parentId, folderName, folderIcon: selectedImage?.image, showInSidebar, showOnFeatured }, loginData?.token, navigate)
+        ApiService.post('/api/v1/listing/save/folder', { listingId, parentId, folderName, folderIcon: selectedImage?.image, showOnFeatured }, loginData?.token, navigate)
             .then(() => {
                 setSelectedImage(null);
                 setFolderName("");
-                setShowInSidebar(false);
+
                 setShowOnFeatured(false);
                 setFolderReloadStatus(true);
                 setReloadData(true);
@@ -148,11 +148,7 @@ const EditFolder = () => {
                                 onChange={(e) => setShowOnFeatured(e.target.checked)}
                             />
                         }
-                        <NiceCheckbox
-                            label="Show in sidebar"
-                            checked={showInSidebar}
-                            onChange={(e) => setShowInSidebar(e.target.checked)}
-                        />
+
                         <div className="flex justify-end">
                             <NiceBack />
 
