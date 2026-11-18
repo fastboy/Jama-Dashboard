@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import NiceLink from '../NiceViews/NiceLink';
 import NiceButton from '../NiceViews/NiceButton';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const SinglePageItem = ({ page, deletePage }) => {
   return (
@@ -13,14 +14,14 @@ const SinglePageItem = ({ page, deletePage }) => {
       className="border bg-cardBg text-cardText border-cardBorder shadow-md rounded-lg p-2 flex flex-col md:flex-row justify-between items-center w-full md:p-4"
     >
       <div className="flex space-x-2 mt-2 md:mt-0 mr-auto">
-        <h2 className="text-sm md:text-base">{page.pageTitle}</h2>
+        <Link
+          className="text-sm md:text-base hover:underline"
+          to={`/p/${page._id}`}
+        >
+          {page.pageTitle}
+        </Link>
       </div>
       <div className="flex space-x-2 mt-2 md:mt-0 ml-auto">
-        <NiceLink
-          label='Open'
-          className="bg-buttonInfo text-buttonText"
-          to={`/p/${page._id}`}
-        />
         <NiceLink
           label='Edit'
           className="bg-buttonSuccess text-buttonText"
