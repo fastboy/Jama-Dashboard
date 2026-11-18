@@ -287,7 +287,7 @@ const EditLink = () => {
                                     value={selectedFolder}
                                     onChange={(e) => setFolderSelection(e.target.value)}
                                 >
-                                    <option value="">No folder</option>
+                                    <option value="">mainDashboard</option>
                                     {folderList?.map((folder) => (
                                         <option key={folder?._id} value={folder?._id}>{folder.listingName}</option>
                                     ))}
