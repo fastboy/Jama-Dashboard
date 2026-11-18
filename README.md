@@ -54,6 +54,8 @@ docker compose logs --tail=200
 
 The repository contains a root-level `Dockerfile`. This error usually means that the Compose YAML was pasted into a web editor, so `build.context: .` points to a temporary directory containing only the Compose file. Docker cannot find the rest of the project there.
 
+`container_name: jama-dashboard` is unrelated to the image build and does not need a `:dev` suffix. The `:tag` syntax belongs to an image reference, for example `image: registry.example/jama-dashboard:dev`. That image must already exist in a registry or on the Docker host; adding `:dev` to `container_name` will not build or download anything.
+
 There are two reliable deployment methods:
 
 1. **Build on the Docker host over SSH** — clone the repository, enter its directory and run `./setup-env.sh` followed by `docker compose up -d --build`. The `Dockerfile`, `client/` and `server/` directories must be present beside `docker-compose.yml`.

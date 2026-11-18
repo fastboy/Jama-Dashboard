@@ -33,38 +33,3 @@ volumes:
     driver: local
   uploads_app:
     driver: local
-
-## Alt config, with more locked down networking & simplified addressing
-#services:
-#  app:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    ports:
-#      - "8000:8000"
-#    container_name: jama-dashboard
-#    environment:
-#      PORT: 8000
-#      NODE_ENV: production
-#      SECRET_KEY: ${SECRET_KEY:?set SECRET_KEY in .env}
-#      MONGODB_URI: mongodb://mongodb/jama-dashboard
-#    volumes:
-#      - uploads_data:/app/storage/uploads
-#    depends_on:
-#      - mongodb
-#    restart: always
-
-#  mongodb:
-#    image: mongo:7.0 ## MongoDB 5.0+ requires AVX support on x86 hosts.
-#    container_name: jama-dashboard_mongodb
-#    volumes:
-#      - mongo_data:/data/db
-#    restart: always
-
-#volumes:
-#  mongo_data:
-#    driver: local
-#  uploads_data:
-#    driver: local
-#  uploads_app:
-#    driver: local
