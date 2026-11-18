@@ -143,7 +143,7 @@ const EditFolder = () => {
                         />
                         {
                             !parentId && <NiceCheckbox
-                                label="Show on featured screen"
+                                label="Visible"
                                 checked={showOnFeatured}
                                 onChange={(e) => setShowOnFeatured(e.target.checked)}
                             />
