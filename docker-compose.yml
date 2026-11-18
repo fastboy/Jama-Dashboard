@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   app:
     build:
@@ -20,7 +18,7 @@ services:
     network_mode: "host" ## is important to function the network scanning. The bridge mode puts it behind NAT and the host mode puts it on the same network as the host.
 
   mongodb:
-    image: mongo:4.0 ##More recent versions of MongoDB needs AVX2 support, so it's better to use the 4.0 version.
+    image: mongo:7.0 ## MongoDB 5.0+ requires AVX support on x86 hosts.
     container_name: jama-dashboard_mongodb
     ports:
       - "27017:27017"
@@ -57,7 +55,7 @@ volumes:
 #    restart: always
 
 #  mongodb:
-#    image: mongo:4.0 ##More recent versions of MongoDB needs AVX2 support, so it's better to use the 4.0 version.
+#    image: mongo:7.0 ## MongoDB 5.0+ requires AVX support on x86 hosts.
 #    container_name: jama-dashboard_mongodb
 #    volumes:
 #      - mongo_data:/data/db

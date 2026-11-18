@@ -22,26 +22,73 @@ The project is maintained as a fork under the **Jama-Dashboard** name. The runti
 - `brand` — project identity, branding and external-reference cleanup
 - `dev` — feature development based on the completed `brand` branch
 
-## Quick start with Docker
+## Quick start with Docker Compose
 
-1. Copy the example environment file and set a private secret:
+The Compose file intentionally requires a private `SECRET_KEY`. It must not have a default value in the repository: the key signs login tokens and must be different on every installation.
+
+### Docker Compose CLI
+
+The easiest method is the included setup script. Run it from the directory containing `docker-compose.yml`:
+
+```bash
+./setup-env.sh
+```
+
+The script creates a local, gitignored `.env` file and generates a random `SECRET_KEY` using `openssl`. If OpenSSL is unavailable, it uses Python's `secrets` module. It does not overwrite an existing `.env` file.
+
+Then validate and start the stack:
+
+```bash
+docker compose config
+docker compose up -d
+docker compose ps
+```
+
+To view startup logs:
+
+```bash
+docker compose logs --tail=200
+```
+
+### Manual `.env` setup
+
+If you prefer to create the file yourself:
 
 ```bash
 cp .env.example .env
+openssl rand -hex 32
 ```
 
-At minimum, define:
+Copy the generated value into `.env`:
 
 ```dotenv
-SECRET_KEY=replace-with-a-long-random-secret
+SECRET_KEY=paste-the-generated-random-value-here
 MONGODB_URI=mongodb://127.0.0.1:27017/jama-dashboard
 ```
 
-2. Start the services:
+Keep `.env` private. Never commit it or paste its `SECRET_KEY` into a public issue, repository or chat.
+
+### Portainer, Dockhand and other web panels
+
+When deploying the Compose file as a Stack/Application, add the variable in the panel's environment-variable section before pressing **Deploy**:
+
+```text
+SECRET_KEY = a-long-random-value-generated-on-your-computer
+```
+
+Generate the value locally with either:
 
 ```bash
-docker compose up -d
+openssl rand -hex 32
 ```
+
+or:
+
+```bash
+python3 -c "import secrets; print(secrets.token_hex(32))"
+```
+
+Do not use a shared example value. Every installation should have its own key. If the panel supports uploading an `.env` file, you can run `./setup-env.sh` locally and upload that file instead. The `.env` file is intentionally excluded from Git.
 
 The application uses host networking because network-device scanning requires access to the host LAN. Review the compose file and firewall policy before exposing the dashboard outside the trusted network.
 
