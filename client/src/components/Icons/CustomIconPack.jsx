@@ -86,9 +86,13 @@ const CustomIconPack = ({ onSelectImage, iconPack }) => {
 
     const decideTheIcon = useCallback((icon) => {
         if (themeType === "dark" && icon?.iconUrlLight) {
-            return `${baseUrlLight}${icon?.iconUrlLight}`;
+            return /^https?:\/\//i.test(icon.iconUrlLight)
+                ? icon.iconUrlLight
+                : `${baseUrlLight}${icon.iconUrlLight}`;
         } else {
-            return `${baseUrl}${icon?.iconUrl}`;
+            return /^https?:\/\//i.test(icon?.iconUrl || '')
+                ? icon.iconUrl
+                : `${baseUrl}${icon?.iconUrl}`;
         }
     }, [baseUrl, baseUrlLight, themeType]);
 
@@ -107,8 +111,10 @@ const CustomIconPack = ({ onSelectImage, iconPack }) => {
     const handleSelectIcon = (icon) => {
         if (icon) {
             onSelectImage({
-                iconUrl: `${baseUrl}${icon?.iconUrl}`,
-                iconUrlLight: icon?.iconUrlLight ? `${baseUrlLight}${icon?.iconUrlLight}` : null,
+                iconUrl: /^https?:\/\//i.test(icon?.iconUrl || '') ? icon.iconUrl : `${baseUrl}${icon.iconUrl}`,
+                iconUrlLight: icon?.iconUrlLight
+                    ? (/^https?:\/\//i.test(icon.iconUrlLight) ? icon.iconUrlLight : `${baseUrlLight}${icon.iconUrlLight}`)
+                    : null,
                 iconProvider,
                 iconId: icon.iconId,
             });

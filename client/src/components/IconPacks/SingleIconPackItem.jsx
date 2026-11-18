@@ -65,9 +65,13 @@ const SingleIconPackItem = ({ iconPack, deleteListener }) => {
 
   const decideTheIcon = useCallback((icon) => {
     if (themeType === "dark" && icon?.iconUrlLight) {
-      return `${baseUrlLight}${icon?.iconUrlLight}`;
+      return /^https?:\/\//i.test(icon.iconUrlLight)
+        ? icon.iconUrlLight
+        : `${baseUrlLight}${icon.iconUrlLight}`;
     } else {
-      return `${baseUrl}${icon?.iconUrl}`;
+      return /^https?:\/\//i.test(icon?.iconUrl || '')
+        ? icon.iconUrl
+        : `${baseUrl}${icon.iconUrl}`;
     }
   }, [baseUrl, baseUrlLight, themeType]);
 
