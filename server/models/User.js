@@ -53,7 +53,7 @@ const userSchema = new Schema({
   },
   location: {
     type: String,
-    default: 'India',
+    default: 'Stockholm',
     required: false,
   },
   unit: {
@@ -63,12 +63,12 @@ const userSchema = new Schema({
   },
   longitude: {
     type: String,
-    default: '77.216721',
+    default: '18.0686',
     required: false,
   },
   latitude: {
     type: String,
-    default: '28.644800',
+    default: '59.3293',
     required: false,
   },
   camerafeed: {

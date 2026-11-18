@@ -63,6 +63,20 @@ const SingleListingInFront = (props) => {
         return url;
     }
 
+    const isExternalLink = (url) => /^https?:\/\//i.test(url || '');
+
+    const renderLink = (url, content, className = '') => {
+        if (isExternalLink(url)) {
+            return (
+                <a href={url} target="_blank" rel="noopener noreferrer" className={className}>
+                    {content}
+                </a>
+            );
+        }
+
+        return <Link to={url} className={className}>{content}</Link>;
+    };
+
     const decideTheIcon = useCallback(() => {
         const iconObject = props.item?.listingIcon;
         if (themeType === "dark" && iconObject?.iconUrlLight) {
@@ -271,13 +285,16 @@ const SingleListingInFront = (props) => {
                                         dangerouslySetInnerHTML={{ __html: fullHtmlData || '' }}
                                     />
                                 </motion.div>
-                            ) :
-                                <Link to={decideTheLink()} className='absolute inset-0 flex flex-col items-center justify-center'>
-                                    <div className='p-8'>
-                                        <ImageView alt="Link" src={decideTheIcon()} defaultSrc="/default.png" errorSrc="/default.png" width="80px" height="80px" />
-                                    </div>
-                                    <div className='text-center overflow-hidden !min-h-20 !max-h-20 mt-2'>{props.item.listingName}</div>
-                                </Link>
+                            ) : renderLink(
+         decideTheLink(),
+         <>
+                                        <div className='p-8'>
+                                            <ImageView alt="Link" src={decideTheIcon()} defaultSrc="/default.png" errorSrc="/default.png" width="80px" height="80px" />
+                                        </div>
+                                        <div className='text-center overflow-hidden !min-h-20 !max-h-20 mt-2'>{props.item.listingName}</div>
+                                    </>,
+                                    'absolute inset-0 flex flex-col items-center justify-center'
+                                )
                         )
                     }
                 </AnimatePresence>
@@ -324,9 +341,8 @@ const SingleListingInFront = (props) => {
                 }
                 {
                     (!showLinkCopy && !showAppsDataForSmallerScreen && props.item.integration && htmlData && width > 286) && (
-                        <Link
-                            to={decideTheLink()}>
-                            {/* skipcq: JS-0440 */}
+                        renderLink(
+                            decideTheLink(),
                             <motion.div
                                 className='cursor-pointer absolute bottom-0 left-0 text-xs w-full hidden md:flex items-center justify-center'
                                 style={{ maxHeight: '70px' }}
@@ -336,7 +352,7 @@ const SingleListingInFront = (props) => {
                                 exit={{ opacity: 0, y: 20 }}
                                 transition={{ duration: 0.5, ease: "easeInOut" }}
                             />
-                        </Link>
+                        )
                     )
                 }
             </motion.div>
