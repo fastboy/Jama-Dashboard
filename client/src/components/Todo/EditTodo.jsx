@@ -46,7 +46,7 @@ const EditTodo = () => {
             image: {
                 iconUrl: "todo",
                 iconUrlLight: null,
-                iconProvider: 'com.astroluma.self'
+                iconProvider: 'com.jama.dashboard.self'
             }
         });
 
@@ -70,7 +70,7 @@ const EditTodo = () => {
                         image: {
                             iconUrl: "todo",
                             iconUrlLight: null,
-                            iconProvider: 'com.astroluma.self'
+                            iconProvider: 'com.jama.dashboard.self'
                         }
                     });
                     setTodoName("");

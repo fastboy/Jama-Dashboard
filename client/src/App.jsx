@@ -91,7 +91,7 @@ const App = () => {
         }}
       >
         <Helmet>
-          <title>Dashboard : Astroluma</title>
+          <title>Dashboard : Jama-Dashboard</title>
           <meta name="theme-color" content={accentColor} />
         </Helmet>
         <div className="bg-bodyBg text-bodyText">

@@ -96,14 +96,14 @@ const DatabaseError = () => {
 
                     <div className="bg-bodyBg text-bodyText border-l-4 border-green-600 p-4 rounded text-bg-bodyBg">
                         <p className="text-center">
-                            Need help setting up your database? Book an appointment with our developer for assistance.
+                            Need help setting up your database? Open an issue in the project repository for assistance.
                         </p>
                     </div>
 
                     <div className="flex justify-center mt-8">
                         <NiceLink
-                            label='Book an appointment'
-                            to="https://getastroluma.com/appointment"
+                            label='Open project support'
+                            to="https://github.com/fastboy/Jama-Dashboard/issues"
                             className="bg-buttonGeneric text-buttonText"
                         />
                     </div>

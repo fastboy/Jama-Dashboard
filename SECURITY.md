@@ -1,5 +1,5 @@
 
-Security is paramount for Astroluma.
+Security is paramount for Jama-Dashboard.
 
 ## Supported Versions
 

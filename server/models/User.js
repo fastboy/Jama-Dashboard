@@ -18,7 +18,7 @@ const userSchema = new Schema({
   },
   siteName: {
     type: String,
-    default: "Astroluma",
+    default: "Jama-Dashboard",
   },
   colorTheme: {
     type: String,
@@ -30,16 +30,16 @@ const userSchema = new Schema({
     default: {
       iconUrl: "defaultuser",
       iconUrlLight: null,
-      iconProvider: 'com.astroluma.self'
+      iconProvider: 'com.jama.dashboard.self'
     },
   },
   siteLogo: {
     type: Object,
     required: false,
     default: {
-      iconUrl: "astroluma",
+      iconUrl: "jama-dashboard",
       iconUrlLight: null,
-      iconProvider: 'com.astroluma.self'
+      iconProvider: 'com.jama.dashboard.self'
     },
   },
   isSuperAdmin: {

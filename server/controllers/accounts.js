@@ -193,12 +193,12 @@ exports.doDebrand = async (req, res) => {
 
         return res.status(200).json({
             error: false,
-            message: "Astroluma branding removed successfully."
+            message: "Jama-Dashboard branding removed successfully."
         });
     } catch (error) {
         return res.status(400).json({
             error: true,
-            message: "Error in removing Astroluma branding."
+            message: "Error in removing Jama-Dashboard branding."
         });
     }
 }
@@ -216,12 +216,12 @@ exports.doRebrand = async (req, res) => {
 
         return res.status(200).json({
             error: false,
-            message: "Astroluma branding applied successfully."
+            message: "Jama-Dashboard branding applied successfully."
         });
     } catch (error) {
         return res.status(400).json({
             error: true,
-            message: "Error in applying Astroluma branding."
+            message: "Error in applying Jama-Dashboard branding."
         });
     }
 }

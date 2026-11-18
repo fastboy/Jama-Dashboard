@@ -1,5 +1,5 @@
-//exports CONSTANTS from here
+// Project support and community URL
 export const CONSTANTS = {
-    BuyMeACoffee: "https://www.buymeacoffee.com/sanjeet990",
+    ProjectUrl: "https://github.com/fastboy/Jama-Dashboard",
 };
 

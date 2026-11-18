@@ -31,7 +31,7 @@ exports.addiconpack = async (req, res) => {
         });
     }
 
-    if (!iconpackUrl?.toLowerCase()?.startsWith('http') || !iconpackUrl?.toLowerCase()?.endsWith('.json') || !iconpackUrl?.toLowerCase()?.includes('://icons.getastroluma.com/')) {
+    if (!iconpackUrl?.toLowerCase()?.startsWith('https://') || !iconpackUrl?.toLowerCase()?.endsWith('.json')) {
         return res.status(500).json({
             error: true,
             message: "Icon pack URL is invalid"

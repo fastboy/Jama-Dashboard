@@ -45,7 +45,7 @@ const EditFolder = () => {
             image: {
                 iconUrl: "folder",
                 iconUrlLight: null,
-                iconProvider: 'com.astroluma.self'
+                iconProvider: 'com.jama.dashboard.self'
             }
         });
         setLoading(true);
@@ -68,7 +68,7 @@ const EditFolder = () => {
                         image: {
                             iconUrl: "folder",
                             iconUrlLight: null,
-                            iconProvider: 'com.astroluma.self'
+                            iconProvider: 'com.jama.dashboard.self'
                         }
                     });
                     setFolderName("");

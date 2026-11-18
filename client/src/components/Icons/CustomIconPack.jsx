@@ -19,7 +19,7 @@ const CustomIconPack = ({ onSelectImage, iconPack }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [baseUrl, setBaseUrl] = useState('');
     const [baseUrlLight, setBaseUrlLight] = useState('');
-    const [iconProvider, setIconProvider] = useState('com.astroluma.self');
+    const [iconProvider, setIconProvider] = useState('com.jama.dashboard.self');
 
     const ITEMS_PER_PAGE = 48;
 

@@ -9,6 +9,14 @@ const https = require('https');
 const allowedModules = require('../utils/allowedModules');
 const { spawn } = require('child_process');
 
+const getAppCatalogBaseUrl = () => {
+    const baseUrl = process.env.APP_CATALOG_BASE_URL?.trim();
+    if (!baseUrl) {
+        throw new Error("Remote app catalog is not configured.");
+    }
+    return baseUrl.replace(/\/+$/, '');
+};
+
 // Common utility functions
 const validateUser = (user) => {
     if (!user || user.isSuperAdmin === false) {
@@ -207,7 +215,7 @@ exports.installRemoteApp = async (req, res) => {
             throw new Error("No application id provided.");
         }
 
-        const appUrl = `https://cdn.jsdelivr.net/gh/Sanjeet990/AstrolumaApps/apps/${appId}.zip`;
+        const appUrl = `${getAppCatalogBaseUrl()}/apps/${appId}.zip`;
 
         // Download file first
         await downloadFile(appUrl, zipPath);
@@ -326,7 +334,7 @@ exports.updateRemoteApp = async (req, res) => {
             fs.rmSync(appPath, { recursive: true });
         }
 
-        const appUrl = `https://cdn.jsdelivr.net/gh/Sanjeet990/AstrolumaApps/apps/${appId}.zip`;
+        const appUrl = `${getAppCatalogBaseUrl()}/apps/${appId}.zip`;
 
         // Download new version
         await downloadFile(appUrl, zipPath);

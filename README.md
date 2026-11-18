@@ -1,174 +1,92 @@
-# Astroluma
+# Jama-Dashboard
 
-<p align="center">
-        <img src="https://getastroluma.com/img/logo.svg" alt="Astroluma" width="100" />
-        <br /><br />
-        <a href="https://github.com/Sanjeet990/Astroluma/releases">
-          <img src="https://img.shields.io/badge/version-1.0.1-blue?style=for-the-badge" />
-        </a>
-        <a href="https://hub.docker.com/r/sanjeet990/astroluma">
-          <img src="https://img.shields.io/docker/pulls/sanjeet990/astroluma?style=for-the-badge&logo=docker" />
-        </a>
-        <a href="https://github.com/Sanjeet990">
-          <img src="https://img.shields.io/github/stars/Sanjeet990/Astroluma?style=for-the-badge&logo=github" />
-        </a>
-        <a href="https://github.com/Sanjeet990/Astroluma/blob/main/LICENSE">
-          <img src="https://img.shields.io/github/license/Sanjeet990/Astroluma?style=for-the-badge" />
-        </a>
-        <br /><br />
-A powerful, self-hosted home lab dashboard built with the MERN stack.
+Jama-Dashboard is a self-hosted home-lab dashboard for links, categories, tasks, snippets, pages, network devices, integrations, themes and user accounts.
 
-</p>
-
-## Overview
-
-Astroluma is a feature-rich, productivity oriented, user-friendly dashboard designed to help you manage multiple aspects of your daily tasks and services. Built with flexibility in mind, it allows you to control various features like task management, device monitoring, app integration, and real-time weather updates, all from a single platform. With its responsive design and dynamic configuration options, Astroluma offers a unique blend of customization, usability, and productivity.
-
-![Listing View](https://getastroluma.com/ss/01-home-featured.png)
-
-## Updates
-
-**Jan 21, 2025**
-- Astroluma v1.0.2 is released. Check the full changelog [here](https://github.com/Sanjeet990/Astroluma/releases)
+The project is maintained as a fork under the **Jama-Dashboard** name. The runtime branding uses `Jama-Dashboard`; use `jama-dashboard` for package names, container names, paths and environment identifiers.
 
 ## Features
 
-### Core Features
-- **Multi-User Support**: Individual instances for each user
-- **Links Organization**: Categorize and organize links with nested categories
-- **Featured Page**: Showcase important categories and links
-- **Custom Domain Support**: Works simultaneously with custom domains and IPs
-- **Network Device Management**: 
-  - IPv4 network device scanning
-  - Wake-on-LAN support
-  - Device status monitoring
+- Multi-user accounts and profile settings
+- Link and category organization
+- Featured listings and custom pages
+- Todo and code-snippet management
+- Network-device discovery and Wake-on-LAN
+- TOTP authenticator support
+- Custom themes and icon packs
+- Optional self-hosted integrations
+- Docker-based deployment with MongoDB
 
-### Productivity Tools
-- **Todo List Manager**: Create and manage multiple todo lists
-- **Snippet Manager**: Store and organize code snippets
-- **TOTP Generation**: Built-in Time-Based One-Time Password generation
-- **Custom Page Creation**: Create and publish custom pages
+## Repository branches
 
-### Integrations
-- **Stream Hub**: Support for IP camera streams
-- **Weather Integration**: Real-time weather updates
-- **Third-Party Apps**: 
-  - Bazarr
-  - FileBrowser
-  - FreshRSS
-  - GitHub
-  - HTML Code
-  - Heimdall
-  - Immich
-  - Linkace
-  - NextCloud
-  - Nginx Proxy Manager
-  - Portainer
-  - Proxmox
-  - Sonarr
-  - Speed Test Tracker
-  - TrueNAS Scale (Core untested)
-  - Uptime Kuma
-  - YouTube
-  - More coming soon!
-- **Custom Integration Support**: Create your own app integrations
+- `main` — stable baseline
+- `brand` — project identity, branding and external-reference cleanup
+- `dev` — feature development based on the completed `brand` branch
 
-### Customization
-- **Themes**: 15 built-in themes with more in development
-- **Icon Pack Support**: User configurable icon pack support. Find icons [here](https://getastroluma.com/icons)
-- **Flexible Layout**: Customizable sidebar and category placement
+## Quick start with Docker
 
-## Installation
+1. Copy the example environment file and set a private secret:
 
-### On Docker:
-
-1. Create a docker-compose.yml file. Best way to do this is to use the [Astroluma Compose](https://getastroluma.com/compose)
-
-Open Astroluma Compose and chose your preffered settings to generate your docker-compose.yml file.
-
-Alternatively, create a docker-compose.yml similar to this:
-
-```yml title="docker-compose.yml"
-version: '3.8'
-
-services:
-  app:
-    image: sanjeet990/astroluma:latest
-    container_name: astroluma
-    ##ports:
-    ##  - "8000:8000"
-    environment:
-      PORT: 8000
-      NODE_ENV: production
-      SECRET_KEY: a2c5f9a8b2d7e1a7f2c9c8d9b5f7a3d5
-      MONGODB_URI: mongodb://localhost:27017/astroluma
-    volumes:
-      - uploads_data:/app/storage/uploads
-      - uploads_apps:/app/storage/apps
-    depends_on:
-      - mongodb
-    restart: always
-    network_mode: host
-
-  mongodb:
-    image: mongo:6.0
-    container_name: astroluma_mongodb
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
-    restart: always
-
-
-volumes:
-  mongo_data:
-    driver: local
-  uploads_data:
-    driver: local
-
+```bash
+cp .env.example .env
 ```
 
-If you're still unsure about creating your own config, please contact [here](https://getastroluma.com/contact).
+At minimum, define:
 
-2. Bring up your stack by running:
-
-```bash 
-docker-compose up -d
+```dotenv
+SECRET_KEY=replace-with-a-long-random-secret
+MONGODB_URI=mongodb://127.0.0.1:27017/jama-dashboard
 ```
-If using docker-compose-plugin:
 
-```bash 
+2. Start the services:
+
+```bash
 docker compose up -d
 ```
 
-Detailed installation doc: [Installation Guide](https://getastroluma.com/docs/getting-started/installation/)
+The application uses host networking because network-device scanning requires access to the host LAN. Review the compose file and firewall policy before exposing the dashboard outside the trusted network.
 
-## Demo and Resources
+## Development
 
-- **Website**: [https://getastroluma.com/](https://getastroluma.com/)
-- **Live Demo**: Coming Soon!
-- **Screenshots**: [https://getastroluma.com/screenshots](https://getastroluma.com/screenshots)
+Install the root, server and client dependencies:
 
-## FAQs
+```bash
+npm install
+npm run postinstall
+```
 
-FAQ list is continuously being updated [here](https://getastroluma.com/faqs).
+Run the backend and frontend in separate terminals:
 
-## Credits
+```bash
+npm run dev:be
+npm run dev:fe
+```
 
-A big shoutout to the people/projects who made this project possible. Check the credits [here](https://getastroluma.com/credits).
+## Optional app catalog
 
-## License
+The remote app catalog is disabled unless configured explicitly. To use a trusted catalog, set:
 
-This project is licensed under the GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
+```dotenv
+APP_CATALOG_BASE_URL=https://example.invalid/catalog
+```
 
-## Contributing
+The client-side catalog URL can be configured with:
 
-Contributions are welcome! Please feel free to submit pull requests.
+```dotenv
+VITE_APP_CATALOG_URL=https://example.invalid/catalog/apps.json
+```
 
-## Maintainer
-
-Maintained by [@Sanjeet990](https://github.com/Sanjeet990)
+Do not use an untrusted catalog in production. Uploaded integrations execute application code and should be reviewed before installation.
 
 ## Support
 
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/sanjeet990)
+Open an issue in the repository for bugs, feature requests and deployment questions:
+
+- https://github.com/fastboy/Jama-Dashboard/issues
+
+## License
+
+This project is distributed under the GNU General Public License, version 3. See [LICENSE](LICENSE).
+
+## Contributing
+
+Use a feature or fix branch, run the relevant checks, and open a pull request against `dev`. Keep `main` reserved for stable releases.

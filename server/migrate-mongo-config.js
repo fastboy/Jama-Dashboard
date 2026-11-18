@@ -4,7 +4,7 @@ require('dotenv').config()
 const config = {
   mongodb: {
     // TODO Change (or review) the url to your MongoDB:
-    url: process.env.MONGODB_URI || "mongodb://localhost:27017/astroluma",
+    url: process.env.MONGODB_URI || "mongodb://localhost:27017/jama-dashboard",
 
     options: {
       connectTimeoutMS: 10000, // Set connection timeout to 10 seconds

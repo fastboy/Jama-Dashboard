@@ -15,6 +15,8 @@ import makeToast from '../../utils/ToastUtils';
 import { useNavigate } from 'react-router-dom';
 import semver from 'semver';
 
+const appCatalogUrl = import.meta.env.VITE_APP_CATALOG_URL?.trim();
+
 const InstallApps = () => {
     const navigate = useNavigate();
     const fileInputRef = useRef(null);
@@ -62,7 +64,7 @@ const InstallApps = () => {
         if (page === 1) setLoading(true);
 
         Promise.all([
-            ApiService.get('https://cdn.jsdelivr.net/gh/Sanjeet990/AstrolumaApps/apps.json', null, navigate),
+            appCatalogUrl ? ApiService.get(appCatalogUrl, null, navigate) : Promise.resolve([]),
             fetchInstalledApps()
         ])
             .then(([appsData]) => {

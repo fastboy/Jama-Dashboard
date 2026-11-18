@@ -5,12 +5,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: astroluma
+    container_name: jama-dashboard
     environment:
       PORT: 8000
       NODE_ENV: production
-      SECRET_KEY: jK8hB2mL6qv9NxX0PzWrDt5Yc3FgT4Vu
-      MONGODB_URI: mongodb://127.0.0.1:27017/astroluma
+      SECRET_KEY: ${SECRET_KEY:?set SECRET_KEY in .env}
+      MONGODB_URI: mongodb://127.0.0.1:27017/jama-dashboard
     volumes:
       - uploads_data:/app/storage/uploads
       - uploads_app:/app/storage/apps
@@ -21,7 +21,7 @@ services:
 
   mongodb:
     image: mongo:4.0 ##More recent versions of MongoDB needs AVX2 support, so it's better to use the 4.0 version.
-    container_name: astroluma_mongodb
+    container_name: jama-dashboard_mongodb
     ports:
       - "27017:27017"
     volumes:
@@ -42,12 +42,12 @@ volumes:
 #      dockerfile: Dockerfile
 #    ports:
 #      - "8000:8000"
-#    container_name: astroluma
+#    container_name: jama-dashboard
 #    environment:
 #      PORT: 8000
 #      NODE_ENV: production
-#      SECRET_KEY: jK8hB2mL6qv9NxX0PzWrDt5Yc3FgT4Vu
-#      MONGODB_URI: mongodb://mongodb/astroluma
+#      SECRET_KEY: ${SECRET_KEY:?set SECRET_KEY in .env}
+#      MONGODB_URI: mongodb://mongodb/jama-dashboard
 #    volumes:
 #      - uploads_data:/app/storage/uploads
 #    depends_on:
@@ -56,7 +56,7 @@ volumes:
 
 #  mongodb:
 #    image: mongo:4.0 ##More recent versions of MongoDB needs AVX2 support, so it's better to use the 4.0 version.
-#    container_name: astroluma_mongodb
+#    container_name: jama-dashboard_mongodb
 #    volumes:
 #      - mongo_data:/data/db
 #    restart: always

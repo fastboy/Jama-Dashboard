@@ -78,10 +78,10 @@ const UserProfile = () => {
         ApiService.get("/api/v1/accounts/rebrand", loginData?.token, navigate)
             .then(() => {
                 setReloadData(true);
-                makeToast("success", "Astroluma branding applied successfully.");
+                makeToast("success", "Jama-Dashboard branding applied successfully.");
             })
             .catch((error) => {
-                if (!error.handled) makeToast("error", "Error applying Astroluma branding.");
+                if (!error.handled) makeToast("error", "Error applying Jama-Dashboard branding.");
             }).finally(() => {
                 setLoading(false);
             });
@@ -188,15 +188,15 @@ const UserProfile = () => {
 
                                 {
                                     !userData.hideBranding ? <ProfileItems
-                                        title="Remove Astroluma Branding"
-                                        subtitle="Remove powered by Astroluma text"
+                                        title="Remove Jama-Dashboard Branding"
+                                        subtitle="Remove powered by Jama-Dashboard text"
                                         onClick={removeBranding}
                                         icon={<FaTimes className="h-5 w-5" />}
                                     />
                                         :
                                         <ProfileItems
-                                            title="Show Astroluma Branding"
-                                            subtitle="Show powered by Astroluma text"
+                                            title="Show Jama-Dashboard Branding"
+                                            subtitle="Show powered by Jama-Dashboard text"
                                             onClick={doReBranding}
                                             icon={<FaStar className="h-5 w-5" />}
                                         />

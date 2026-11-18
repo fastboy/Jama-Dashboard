@@ -117,7 +117,7 @@ const MyIconsSection = ({ onSelectImage }) => {
             onSelectImage({
                 iconUrl: image?.iconPath,
                 iconUrlLight: null,
-                iconProvider: "com.astroluma.self",
+                iconProvider: "com.jama.dashboard.self",
                 iconId: image?.iconPath,
             });
         } else {

@@ -45,7 +45,7 @@ const EditSnippetList = () => {
             image: {
                 iconUrl: "snippet",
                 iconUrlLight: null,
-                iconProvider: 'com.astroluma.self'
+                iconProvider: 'com.jama.dashboard.self'
             }
         });
 
@@ -69,7 +69,7 @@ const EditSnippetList = () => {
                         image: {
                             iconUrl: "snippet",
                             iconUrlLight: null,
-                            iconProvider: 'com.astroluma.self'
+                            iconProvider: 'com.jama.dashboard.self'
                         }
                     });
                     setSnippetName("");

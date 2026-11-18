@@ -15,10 +15,10 @@ const ImageSelectorModal = () => {
 
   const allIconPacks = useRecoilValue(iconPackState);
 
-  const [activeTab, setActiveTab] = useState("com.astroluma.self");
+  const [activeTab, setActiveTab] = useState("com.jama.dashboard.self");
 
   useEffect(() => {
-    setActiveTab("com.astroluma.self");
+    setActiveTab("com.jama.dashboard.self");
   }, [modalState.isOpen]);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const ImageSelectorModal = () => {
       name: pack.iconProvider,
       label: pack.iconName
     }));
-    tempItemArray?.unshift({ name: 'com.astroluma.self', label: 'My Icons' });
+    tempItemArray?.unshift({ name: 'com.jama.dashboard.self', label: 'My Icons' });
     setTabConfig(tempItemArray);
   }, [allIconPacks]);
 
@@ -54,7 +54,7 @@ const ImageSelectorModal = () => {
 
           <div className="mt-4">
             {
-              activeTab === "com.astroluma.self" && <BrowserRouter><MyIconsSection onSelectImage={handleSelectImage} /></BrowserRouter>
+              activeTab === "com.jama.dashboard.self" && <BrowserRouter><MyIconsSection onSelectImage={handleSelectImage} /></BrowserRouter>
             }
             {
               allIconPacks?.map(iconPack => (

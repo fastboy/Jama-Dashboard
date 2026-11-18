@@ -45,7 +45,7 @@ const EditDevice = () => {
             image: {
                 iconUrl: "device",
                 iconUrlLight: null,
-                iconProvider: 'com.astroluma.self'
+                iconProvider: 'com.jama.dashboard.self'
             }
         });
         setLoading(true);
@@ -73,7 +73,7 @@ const EditDevice = () => {
                         image: {
                             iconUrl: "device",
                             iconUrlLight: null,
-                            iconProvider: 'com.astroluma.self'
+                            iconProvider: 'com.jama.dashboard.self'
                         }
                     });
                 }

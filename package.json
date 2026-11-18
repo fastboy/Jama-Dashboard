@@ -1,5 +1,5 @@
 {
-  "name": "astroluma",
+  "name": "jama-dashboard",
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
@@ -18,6 +18,6 @@
     "setup": "cd server && npm run install-app-deps",
     "server": "cd server && npm run server"
   },
-  "author": "Sanjeet990",
-  "license": "GNU"
+  "author": "fastboy",
+  "license": "GPL-3.0-only"
 }

@@ -23,7 +23,7 @@ const BrandingRemovalModal = () => {
   };
 
   const doDonate = () => {
-    window.open(CONSTANTS.BuyMeACoffee, '_blank');
+    window.open(CONSTANTS.ProjectUrl, '_blank');
   };
 
   const doRemoveBranding = (donating) => {
@@ -31,7 +31,7 @@ const BrandingRemovalModal = () => {
     ApiService.get("/api/v1/accounts/debrand", loginData?.token, navigate)
       .then(() => {
         setReloadData(true);
-        makeToast("success", "Astroluma branding removed successfully.");
+        makeToast("success", "Jama-Dashboard branding removed successfully.");
       })
       .catch((error) => {
         if (!error.handled) makeToast("error", "Error removing branding.");
@@ -60,7 +60,7 @@ const BrandingRemovalModal = () => {
               Your support keeps this tool alive and thriving! Every contribution helps us maintain and improve the project.
             </p>
             <p className="text-center">
-              Plus, as a token of appreciation, contributors will be featured on the Astroluma portal, showcasing their invaluable support to our community.
+              Plus, as a token of appreciation, contributors will be featured on the Jama-Dashboard portal, showcasing their invaluable support to our community.
             </p>
             <p className="text-sm text-modalBodyText/50 text-center italic">
               Branding removal is complimentary, but your support ensures we can continue building great tools for everyone. Thank you for helping us grow!

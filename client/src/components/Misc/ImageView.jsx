@@ -32,7 +32,7 @@ const ImageView = ({
     // Special case mappings
     const specialCases = {
       'authenticator': '/otp.png',
-      'astroluma': '/astroluma.svg',
+      'jama-dashboard': '/jama-dashboard.svg',
       'link': '/link.png',
       'folder': '/folder.png',
       'todo': '/todo.png',
@@ -40,7 +40,7 @@ const ImageView = ({
       'camera': '/cctv.png',
       'device': '/computer.png',
       '/default.png': '/default.png',
-      '/astroluma.svg': '/astroluma.svg',
+      '/jama-dashboard.svg': '/jama-dashboard.svg',
       'defaultuser': '/avatar.png'
     };
 

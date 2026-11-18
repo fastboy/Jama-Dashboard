@@ -50,7 +50,7 @@ const EditLink = () => {
             image: {
                 iconUrl: "link",
                 iconUrlLight: null,
-                iconProvider: 'com.astroluma.self'
+                iconProvider: 'com.jama.dashboard.self'
             }
         });
         setLoading(true);
@@ -95,7 +95,7 @@ const EditLink = () => {
                         image: {
                             iconUrl: "link",
                             iconUrlLight: null,
-                            iconProvider: 'com.astroluma.self'
+                            iconProvider: 'com.jama.dashboard.self'
                         }
                     });
                     setLinkName("");

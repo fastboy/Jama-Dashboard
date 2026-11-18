@@ -136,18 +136,18 @@ const Settings = () => {
         {
             id: 14,
             title: 'Support',
-            description: 'Get help and support related to Astroluma',
+            description: 'Get help and support related to Jama-Dashboard',
             icon: <MdContactSupport />,
             show: true,
-            route: 'https://getastroluma.com/contact'
+            route: 'https://github.com/fastboy/Jama-Dashboard/issues'
         },
         {
             id: 15,
-            title: 'Buy Me a Coffee',
-            description: 'Support the developer by buying a coffee',
+            title: 'Visit the project',
+            description: 'Open the project repository and support page',
             icon: <FaCoffee />,
             show: true,
-            route: CONSTANTS.BuyMeACoffee
+            route: CONSTANTS.ProjectUrl
         },
     ]
 

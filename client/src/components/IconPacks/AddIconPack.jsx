@@ -36,7 +36,7 @@ const AddIconPack = () => {
             return makeToast("warning", "Icon pack URL is required");
         }
 
-        if (!iconpackUrl.toLowerCase()?.startsWith('http') || !iconpackUrl.toLowerCase()?.endsWith('.json') || !iconpackUrl.toLowerCase()?.includes('://icons.getastroluma.com/')) {
+        if (!iconpackUrl.toLowerCase()?.startsWith('https://') || !iconpackUrl.toLowerCase()?.endsWith('.json')) {
             makeToast("error", "Please enter a valid URL.");
             return;
         }
@@ -90,7 +90,7 @@ const AddIconPack = () => {
                     <div className="mt-4">
                         <h2>To get icon packs:</h2>
                         <div className="text-xs mt-4">
-                            Icon packs are hosted on Astroluma Portal. Go to <a href="https://getastroluma.com/icons" target="_blank" rel="noreferrer" className="text-blue-400">Icon Packs</a> to get the JSON URL of icon pack. Paste that URL here to import the icon pack.
+                            Icon packs can be hosted at any trusted HTTPS URL ending in `.json`.
                         </div>
                     </div>
                 </div>

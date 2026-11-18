@@ -43,7 +43,7 @@ const EditAuthenticator = () => {
             image: {
                 iconUrl: "authenticator",
                 iconUrlLight: null,
-                iconProvider: 'com.astroluma.self'
+                iconProvider: 'com.jama.dashboard.self'
             }
         });
         if (authId) {
@@ -65,7 +65,7 @@ const EditAuthenticator = () => {
                 image: {
                     iconUrl: "authenticator",
                     iconUrlLight: null,
-                    iconProvider: 'com.astroluma.self'
+                    iconProvider: 'com.jama.dashboard.self'
                 }
             });
             setServiceName('');

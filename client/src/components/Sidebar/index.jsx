@@ -127,8 +127,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 <ImageView src={decideTheIcon()} alt="Logo" className="h-12 w-12 rounded-full" />
               </div>
               <div className="flex flex-col items-left ml-2">
-                <span className='text-2xl Orbitron'>{userData?.siteName || "Astroluma"}</span>
-                {!userData?.hideBranding && <span className="text-xxs">Powered by Astroluma v{packageJson.version}</span>}
+                <span className='text-2xl Orbitron'>{userData?.siteName || "Jama-Dashboard"}</span>
+                {!userData?.hideBranding && <span className="text-xxs">Powered by Jama-Dashboard v{packageJson.version}</span>}
               </div>
             </div>
           </Link>
@@ -274,7 +274,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       icon={<MdContactSupport />}
                       text="Support"
                       active={false}
-                      to="https://getastroluma.com/contact" />
+                      to="https://github.com/fastboy/Jama-Dashboard/issues" />
 
                   </>
               }
