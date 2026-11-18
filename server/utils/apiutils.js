@@ -74,7 +74,7 @@ exports.getSecretKey = () => {
         }
         
         //Encrypt this string and make it 32 characters long
-        secret = CryptoJS.AES.encrypt(macAddress, process.env.DEVICE_SECRET_SALT || 'jama-dashboard').toString().substring(0, 32);
+        secret = CryptoJS.AES.encrypt(macAddress, 'astroluma').toString().substring(0, 32);
     }
 
     return secret;
