@@ -252,30 +252,32 @@ const getBreadcrumb = async (listingId, userId) => {
     }
 }
 
+const buildListQuery = (listingId, userId) => {
+    if (!listingId) {
+        return {
+            parentId: null,
+            onFeatured: true,
+            userId,
+            listingType: { $ne: "stream" }
+        };
+    }
+
+    return {
+        parentId: new mongoose.Types.ObjectId(listingId),
+        userId,
+        listingType: { $ne: "stream" }
+    };
+};
+
+exports.buildListQuery = buildListQuery;
+
 exports.listItems = async (req, res) => {
     const userId = req.user._id;
     let listingId = req.params.listingId;
 
     if (!listingId || listingId === 'undefined') listingId = null;
 
-    let query;
-    if (!listingId) {
-        // If parentId is null, select records where parentId=null, onFeatured is true, and userId is userId
-        query = {
-            parent: null,
-            onFeatured: true,
-            userId,
-            listingType: { $ne: "stream" }
-        };
-    } else {
-        listingId = new mongoose.Types.ObjectId(req.params.listingId);
-        // If parentId is not null, select records where parentId=parentId and userId is userId
-        query = {
-            parentId: listingId,
-            userId,
-            listingType: { $ne: "stream" }
-        };
-    }
+    const query = buildListQuery(listingId, userId);
 
     const [items, parentFolder, breadcrumb] = await Promise.all([
         // list all items of this listing id
