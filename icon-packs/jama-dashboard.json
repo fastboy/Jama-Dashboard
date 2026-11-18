@@ -1,28 +1,28 @@
 {
-  "iconProvider": "pl.potrykus.jama-dashboard.selfhst",
+  "iconProvider": "pl.potrykus.jama-dashboard.dashboard-icons",
   "iconPack": "Jama-Dashboard Services",
-  "iconPackVersion": "1.0.0",
+  "iconPackVersion": "1.1.0",
   "packDeveloper": "Jama-Dashboard",
   "credit": {
-    "name": "selfh.st/icons",
-    "url": "https://selfh.st/icons"
+    "name": "Dashboard Icons",
+    "url": "https://github.com/walkxcode/dashboard-icons"
   },
-  "baseUrl": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/",
-  "baseUrlLight": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/",
+  "baseUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons@main/svg/",
+  "baseUrlLight": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons@main/svg/",
   "iconData": [
-    { "iconName": "Proxmox", "iconId": "proxmox", "iconUrl": "proxmox.svg", "iconUrlLight": "proxmox-light.svg" },
-    { "iconName": "Beszel", "iconId": "beszel", "iconUrl": "beszel.svg", "iconUrlLight": "beszel-light.svg" },
-    { "iconName": "Nextcloud", "iconId": "nextcloud", "iconUrl": "nextcloud.svg", "iconUrlLight": "nextcloud-light.svg" },
-    { "iconName": "Docker", "iconId": "docker", "iconUrl": "docker.svg", "iconUrlLight": "docker-dark.svg" },
-    { "iconName": "Portainer", "iconId": "portainer", "iconUrl": "portainer.svg", "iconUrlLight": "portainer-light.svg" },
-    { "iconName": "Nginx Proxy Manager", "iconId": "nginx-proxy-manager", "iconUrl": "nginx-proxy-manager.svg", "iconUrlLight": "nginx-proxy-manager-light.svg" },
-    { "iconName": "OPNsense", "iconId": "opnsense", "iconUrl": "opnsense.svg", "iconUrlLight": "opnsense-light.svg" },
-    { "iconName": "Grafana", "iconId": "grafana", "iconUrl": "grafana.svg", "iconUrlLight": "grafana-light.svg" },
-    { "iconName": "Uptime Kuma", "iconId": "uptime-kuma", "iconUrl": "uptime-kuma.svg", "iconUrlLight": "uptime-kuma-light.svg" },
-    { "iconName": "PufferPanel", "iconId": "pufferpanel", "iconUrl": "pufferpanel.svg", "iconUrlLight": "pufferpanel-light.svg" },
-    { "iconName": "Apache Guacamole", "iconId": "apache-guacamole", "iconUrl": "apache-guacamole.svg", "iconUrlLight": "apache-guacamole-light.svg" },
-    { "iconName": "MongoDB", "iconId": "mongodb", "iconUrl": "mongodb.svg", "iconUrlLight": "mongodb-light.svg" },
-    { "iconName": "GitHub", "iconId": "github", "iconUrl": "github.svg", "iconUrlLight": "github-light.svg" },
-    { "iconName": "Discord", "iconId": "discord", "iconUrl": "discord.svg", "iconUrlLight": "discord-light.svg" }
+    { "iconName": "Proxmox", "iconId": "proxmox", "iconUrl": "proxmox.svg" },
+    { "iconName": "Beszel", "iconId": "beszel", "iconUrl": "beszel.svg" },
+    { "iconName": "Nextcloud", "iconId": "nextcloud", "iconUrl": "nextcloud.svg" },
+    { "iconName": "Docker", "iconId": "docker", "iconUrl": "docker.svg" },
+    { "iconName": "Portainer", "iconId": "portainer", "iconUrl": "portainer.svg" },
+    { "iconName": "Nginx Proxy Manager", "iconId": "nginx-proxy-manager", "iconUrl": "nginx-proxy-manager.svg" },
+    { "iconName": "OPNsense", "iconId": "opnsense", "iconUrl": "opnsense.svg" },
+    { "iconName": "Grafana", "iconId": "grafana", "iconUrl": "grafana.svg" },
+    { "iconName": "Uptime Kuma", "iconId": "uptime-kuma", "iconUrl": "uptime-kuma.svg" },
+    { "iconName": "PufferPanel", "iconId": "pufferpanel", "iconUrl": "pufferpanel.svg" },
+    { "iconName": "Apache Guacamole", "iconId": "apache-guacamole", "iconUrl": "guacamole.svg" },
+    { "iconName": "MongoDB", "iconId": "mongodb", "iconUrl": "mongodb.svg" },
+    { "iconName": "GitHub", "iconId": "github", "iconUrl": "github.svg" },
+    { "iconName": "Discord", "iconId": "discord", "iconUrl": "discord.svg" }
   ]
 }
