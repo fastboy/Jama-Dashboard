@@ -1,7 +1,7 @@
 import './App.css';
 import { useRecoilValue } from 'recoil';
 import { colorThemeState } from './atoms';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
 import 'react-modern-drawer/dist/index.css'
 import { useEffect, useState } from 'react';
@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import { Helmet } from "react-helmet"
 import Layout from './components/Layout/Layout';
 import Login from './components/Auth/Login';
+import Setup from './components/Auth/Setup';
 import Loader from './components/Layout/Loader';
 import PrivateRoute from './components/Layout/PrivateRoute';
 import Settings from './components/Settings/Settings';
@@ -45,9 +46,35 @@ import WeatherSettings from './components/Settings/WeatherSettings';
 import GeneralSettings from './components/Settings/GeneralSettings';
 import IconPacks from './components/IconPacks/index';
 import AddIconPack from './components/IconPacks/AddIconPack';
+import ApiService from './utils/ApiService';
 
 import SystemThemes from './utils/SystemThemes';
 import UserProfile from './components/Accounts/UserProfile';
+
+const SetupGate = ({ children }) => {
+  const [setupRequired, setSetupRequired] = useState(null);
+
+  useEffect(() => {
+    ApiService.get('/api/v1/setup/status')
+      .then(data => setSetupRequired(data?.setupRequired === true))
+      .catch(() => setSetupRequired(false));
+  }, []);
+
+  if (setupRequired === null) {
+    return <div className="flex h-screen items-center justify-center">Checking initial setup...</div>;
+  }
+
+  if (setupRequired) {
+    return (
+      <Routes>
+        <Route path="/setup" element={<Setup />} />
+        <Route path="*" element={<Navigate to="/setup" replace />} />
+      </Routes>
+    );
+  }
+
+  return children;
+};
 
 const App = () => {
   const [themeType, setThemeType] = useState("dark");
@@ -96,6 +123,7 @@ const App = () => {
         </Helmet>
         <div className="bg-bodyBg text-bodyText">
           <div className="flex h-screen overflow-hidden">
+            <SetupGate>
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route
@@ -171,6 +199,7 @@ const App = () => {
               <Route path="/network-error" element={<NetworkError />} />
               <Route path="/database-error" element={<DatabaseError />} />
             </Routes>
+            </SetupGate>
           </div>
         </div>
       </BrowserRouter>

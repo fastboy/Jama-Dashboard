@@ -45,6 +45,8 @@ docker compose up -d
 
 The application uses host networking because network-device scanning requires access to the host LAN. Review the compose file and firewall policy before exposing the dashboard outside the trusted network.
 
+On the first start, open the dashboard in a browser and complete the **Initial setup** form. There is no factory username or password. The first account becomes the super administrator. Passwords are stored with Argon2id; older MD5 hashes are accepted only for migration and are upgraded after a successful login. The one-time setup marker remains completed even if the administrator account is later deleted.
+
 ## Development
 
 Install the root, server and client dependencies:

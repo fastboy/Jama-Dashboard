@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ApiService from "../../utils/ApiService";
-import md5 from 'md5';
+
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { colorThemeState, loadingState, loginState } from "../../atoms";
@@ -28,7 +28,7 @@ const Login = () => {
 
         setLoading(true);
 
-        ApiService.post('/api/v1/login', { username: username, password: md5(password) }, null, navigate)
+        ApiService.post('/api/v1/login', { username: username, password }, null, navigate)
             .then(data => {
                 makeToast("success", "Login success.");
                 const token = data?.message?.token;

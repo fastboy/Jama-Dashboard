@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { hashPassword, verifyPassword } = require('../utils/password');
 
 
 exports.doLogin = async (req, res) => {
@@ -18,8 +19,14 @@ exports.doLogin = async (req, res) => {
             const user = await User.findOne({ username: new RegExp(`^${username}$`, 'i') });
 
             if (user) {
-                // Check if the password matches
-                if (password === user.password) {
+                const passwordResult = await verifyPassword(password, user.password);
+                if (passwordResult.valid) {
+                    if (passwordResult.needsRehash) {
+                        await User.updateOne(
+                            { _id: user._id },
+                            { $set: { password: await hashPassword(password) } }
+                        );
+                    }
                     const payload = {
                         userId: user._id, // Use user._id for user ID
                         username: user.username,

@@ -1,5 +1,5 @@
-const md5 = require('md5');
 const User = require('../models/User');
+const { hashPassword } = require('../utils/password');
 
 // Save or update user account
 exports.saveAccount = async (req, res) => {
@@ -43,7 +43,7 @@ exports.saveAccount = async (req, res) => {
             const newUser = new User({
                 fullName,
                 username: username.toLowerCase(),
-                password: md5(password),
+                password: await hashPassword(password),
                 siteName,
                 colorTheme: "dark",
                 authenticator: false,
@@ -322,7 +322,7 @@ exports.changePassword = async (req, res) => {
     try {
         await User.updateOne(
             { _id: userId },
-            { $set: { password: md5(password) } }
+            { $set: { password: await hashPassword(password) } }
         );
 
         return res.status(200).json({
