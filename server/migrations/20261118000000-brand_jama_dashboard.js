@@ -44,8 +44,8 @@ module.exports = {
         // can add a replacement from any trusted HTTPS JSON URL.
         await iconPacks.deleteMany({
             $or: [
-                { iconProvider: 'com.astroluma.selfh.st' },
-                { jsonUrl: { $regex: /icons\.getastroluma\.com/i } }
+                { userId: null, iconProvider: 'com.astroluma.selfh.st' },
+                { userId: null, jsonUrl: { $regex: /icons\.getastroluma\.com/i } }
             ]
         });
     },
