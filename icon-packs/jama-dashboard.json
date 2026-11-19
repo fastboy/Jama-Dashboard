@@ -1,7 +1,7 @@
 {
   "iconProvider": "pl.potrykus.jama-dashboard.dashboard-icons",
   "iconPack": "Jama-Dashboard Services",
-  "iconPackVersion": "1.4.0",
+  "iconPackVersion": "1.5.0",
   "packDeveloper": "Jama-Dashboard",
   "credit": {
     "name": "Dashboard Icons",
@@ -16,6 +16,7 @@
     { "iconName": "Docker", "iconId": "docker", "iconUrl": "docker.svg" },
     { "iconName": "GitHub", "iconId": "github", "iconUrl": "github.svg" },
     { "iconName": "Grafana", "iconId": "grafana", "iconUrl": "grafana.svg" },
+    { "iconName": "Lab Dash", "iconId": "lab-dash", "iconUrl": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/lab-dash.svg" },
     { "iconName": "Minecraft", "iconId": "minecraft", "iconUrl": "minecraft.svg" },
     { "iconName": "MongoDB", "iconId": "mongodb", "iconUrl": "mongodb.svg" },
     { "iconName": "Nextcloud", "iconId": "nextcloud", "iconUrl": "nextcloud.svg" },
