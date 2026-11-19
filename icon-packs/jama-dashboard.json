@@ -1,14 +1,14 @@
 {
   "iconProvider": "pl.potrykus.jama-dashboard.dashboard-icons",
   "iconPack": "Jama-Dashboard Services",
-  "iconPackVersion": "1.5.0",
+  "iconPackVersion": "1.6.0",
   "packDeveloper": "Jama-Dashboard",
   "credit": {
     "name": "Dashboard Icons",
-    "url": "https://github.com/walkxcode/dashboard-icons"
+    "url": "https://github.com/homarr-labs/dashboard-icons"
   },
-  "baseUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons@main/svg/",
-  "baseUrlLight": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons@main/svg/",
+  "baseUrl": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons@main/svg/",
+  "baseUrlLight": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons@main/svg/",
   "iconData": [
     { "iconName": "Apache Guacamole", "iconId": "apache-guacamole", "iconUrl": "guacamole.svg" },
     { "iconName": "Beszel", "iconId": "beszel", "iconUrl": "beszel.svg" },
@@ -16,7 +16,7 @@
     { "iconName": "Docker", "iconId": "docker", "iconUrl": "docker.svg" },
     { "iconName": "GitHub", "iconId": "github", "iconUrl": "github.svg" },
     { "iconName": "Grafana", "iconId": "grafana", "iconUrl": "grafana.svg" },
-    { "iconName": "Lab Dash", "iconId": "lab-dash", "iconUrl": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/lab-dash.svg" },
+    { "iconName": "Lab Dash", "iconId": "lab-dash", "iconUrl": "lab-dash.svg" },
     { "iconName": "Minecraft", "iconId": "minecraft", "iconUrl": "minecraft.svg" },
     { "iconName": "MongoDB", "iconId": "mongodb", "iconUrl": "mongodb.svg" },
     { "iconName": "Nextcloud", "iconId": "nextcloud", "iconUrl": "nextcloud.svg" },
