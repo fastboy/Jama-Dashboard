@@ -11,6 +11,7 @@ import Breadcrumb from '../Breadcrumb/Breadcrumb';
 import useCurrentRoute from '../../hooks/useCurrentRoute';
 import ManagePublishPageModal from '../Modals/ManagePublishPageModal';
 import SingleIconPackItem from './SingleIconPackItem';
+import UploadedIconsManager from './UploadedIconsManager';
 import NoListing from '../Misc/NoListing';
 import makeToast from '../../utils/ToastUtils';
 import NiceLink from '../NiceViews/NiceLink';
@@ -106,6 +107,7 @@ const IconPacks = () => {
           )}
         </div>
       </motion.div>
+      <UploadedIconsManager />
     </>
   );
 };

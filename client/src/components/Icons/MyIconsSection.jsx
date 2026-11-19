@@ -10,6 +10,7 @@ import NiceLoader from '../NiceViews/NiceLoader';
 import makeToast from '../../utils/ToastUtils';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { FiTrash } from 'react-icons/fi';
 
 const MyIconsSection = ({ onSelectImage }) => {
     const navigate = useNavigate();
@@ -96,6 +97,22 @@ const MyIconsSection = ({ onSelectImage }) => {
         }
     };
 
+    const handleDeleteIcon = (event, image) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!window.confirm("Delete this uploaded icon?")) return;
+
+        ApiService.get(`/api/v1/images/delete/${image._id}`, loginData?.token, navigate)
+            .then(() => {
+                setImageList((current) => current.filter((item) => item._id !== image._id));
+                makeToast("success", "Icon deleted.");
+            })
+            .catch((error) => {
+                if (!error.handled) makeToast("error", "Cannot delete icon.");
+            });
+    };
+
+
     const renderUploader = () => (
         !isUploading ? (
             <>
@@ -133,8 +150,16 @@ const MyIconsSection = ({ onSelectImage }) => {
                     key={image._id}
                     whileHover={{ scale: 0.92 }}
                     onClick={() => handleSelectIcon(image)}
-                    className="w-18 h-18 p-1 border border-imageSelectionBorder hover:border-imageSelectionHoverBorder bg-imageSelectionBg hover:bg-imageSelectionHoverBg rounded-lg flex justify-center items-center cursor-pointer transition-all duration-300"
+                    className="relative w-18 h-18 p-1 border border-imageSelectionBorder hover:border-imageSelectionHoverBorder bg-imageSelectionBg hover:bg-imageSelectionHoverBg rounded-lg flex justify-center items-center cursor-pointer transition-all duration-300"
                 >
+                    {image.userId && <button
+                        type="button"
+                        title="Delete uploaded icon"
+                        onClick={(event) => handleDeleteIcon(event, image)}
+                        className="absolute right-0 top-0 z-10 rounded-full bg-buttonDanger p-1 text-buttonText"
+                    >
+                        <FiTrash size={12} />
+                    </button>}
                     <ImageView
                         src={image.iconPath}
                         alt="placeholder"
