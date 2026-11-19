@@ -98,6 +98,45 @@ exports.addiconpack = async (req, res) => {
     }
 };
 
+exports.updateIconPack = async (req, res) => {
+    const { id } = req.params;
+    const { iconpackUrl } = req.body;
+    const userId = req.user?._id;
+
+    if (!iconpackUrl || !iconpackUrl.toLowerCase().startsWith('https://') || !iconpackUrl.toLowerCase().endsWith('.json')) {
+        return res.status(400).json({ error: true, message: "Icon pack URL is invalid" });
+    }
+
+    try {
+        const response = await axios.get(iconpackUrl);
+        const data = response.data;
+        if (response.status !== 200 || data?.error || !data?.iconProvider || !Array.isArray(data?.iconData)) {
+            return res.status(400).json({ error: true, message: "Failed to load icon pack" });
+        }
+
+        const updatedIconPack = await IconPack.findOneAndUpdate(
+            { _id: id, userId },
+            {
+                iconProvider: data.iconProvider,
+                iconName: data.iconPack,
+                iconPackVersion: data.iconPackVersion,
+                jsonUrl: iconpackUrl,
+                packDeveloper: data.packDeveloper,
+                credit: data.credit
+            },
+            { new: true }
+        );
+
+        if (!updatedIconPack) {
+            return res.status(404).json({ error: true, message: "Icon pack not found" });
+        }
+
+        return res.status(200).json({ error: false, message: updatedIconPack });
+    } catch (err) {
+        return res.status(500).json({ error: true, message: err.message });
+    }
+};
+
 exports.deleteIconPack = async (req, res) => {
     const iconPackId = req.params.id;
     const userId = req.user?._id;

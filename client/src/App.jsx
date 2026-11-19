@@ -180,6 +180,7 @@ const App = () => {
                             <Route key={Math.random()} path="/manage/theme" element={<ThemeList />} />
                             <Route key={Math.random()} path="/manage/iconpack" element={<IconPacks />} />
                             <Route key={Math.random()} path="/manage/iconpack/add" element={<AddIconPack />} />
+                            <Route key={Math.random()} path="/manage/iconpack/edit/:id" element={<AddIconPack />} />
                             <Route key={Math.random()} path="/manage/weather" element={<WeatherSettings />} /> 
                             <Route key={Math.random()} path="/manage/page/add" element={<EditPage />} />
                             <Route key={Math.random()} path="/manage/page/:pageId" element={<EditPage />} />

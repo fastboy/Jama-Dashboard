@@ -9,6 +9,7 @@ import { FiTrash } from 'react-icons/fi';
 import { colorThemeState, loginState } from '../../atoms';
 import SystemThemes from '../../utils/SystemThemes';
 import NiceButton from '../NiceViews/NiceButton';
+import NiceLink from '../NiceViews/NiceLink';
 import makeToast from '../../utils/ToastUtils';
 import { useNavigate } from 'react-router-dom';
 
@@ -134,6 +135,13 @@ const SingleIconPackItem = ({ iconPack, deleteListener }) => {
                       >
                         <FiTrash size={20} />
                       </div>
+                    }
+                    {
+                      iconPack?.userId && <NiceLink
+                        label="Edit"
+                        to={`/manage/iconpack/edit/${iconPack._id}`}
+                        className="absolute top-0 left-0 m-2 bg-buttonInfo text-buttonText"
+                      />
                     }
                     {
                       icons.map((icon, index) => (

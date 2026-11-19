@@ -10,11 +10,12 @@ import NiceBack from '../NiceViews/NiceBack';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
 import useCurrentRoute from '../../hooks/useCurrentRoute';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const AddIconPack = () => {
 
     const navigate = useNavigate();
+    const { id } = useParams();
 
     const setActiveRoute = useCurrentRoute();
 
@@ -30,6 +31,16 @@ const AddIconPack = () => {
         setActiveRoute("/manage/iconpack");
     }, [setActiveRoute]);
 
+    useEffect(() => {
+        if (!id) return;
+        ApiService.get("/api/v1/iconpack/list", loginData?.token, navigate)
+            .then((response) => {
+                const iconPack = response?.message?.find((pack) => pack._id === id);
+                if (iconPack) setIconpackUrl(iconPack.jsonUrl);
+            })
+            .catch(() => makeToast("error", "Failed to load icon pack"));
+    }, [id, loginData?.token, navigate]);
+
     const saveSettings = () => {
         //validate data
         if (!iconpackUrl) {
@@ -43,9 +54,10 @@ const AddIconPack = () => {
 
         //send data to save
         setLoading(true);
-        ApiService.post("/api/v1/iconpack/add", { iconpackUrl }, loginData?.token, navigate)
+        const endpoint = id ? `/api/v1/iconpack/update/${id}` : "/api/v1/iconpack/add";
+        ApiService.post(endpoint, { iconpackUrl }, loginData?.token, navigate)
             .then(() => {
-                makeToast("success", "Icon pack added successfully.");
+                makeToast("success", id ? "Icon pack updated successfully." : "Icon pack added successfully.");
                 setIconpackUrl('');
                 setReloadData(true);
                 navigate("/manage/iconpack");
@@ -60,10 +72,10 @@ const AddIconPack = () => {
     return (
         <>
             <Helmet>
-                <title>Add Icon Pack</title>
+                <title>{id ? "Edit Icon Pack" : "Add Icon Pack"}</title>
             </Helmet>
 
-            <Breadcrumb type="custom" pageTitle={"Add Icon Pack"} breadcrumbList={[{ "id": "1", "linkName": "Settings", "linkUrl": "/manage" }, { "id": "2", "linkName": "Icon Packs", "linkUrl": "/manage/iconpack" }]} />
+            <Breadcrumb type="custom" pageTitle={id ? "Edit Icon Pack" : "Add Icon Pack"} breadcrumbList={[{ "id": "1", "linkName": "Settings", "linkUrl": "/manage" }, { "id": "2", "linkName": "Icon Packs", "linkUrl": "/manage/iconpack" }]} />
 
             <div className="max-w-4xl mx-auto w-full">
                 <div className="card border bg-cardBg text-cardText border-cardBorder shadow-md rounded-xl px-8 pt-6 pb-8 mb-4">
@@ -73,7 +85,7 @@ const AddIconPack = () => {
                             value={iconpackUrl}
                             className='border bg-inputBg border-inputBorder text-inputText placeholder-inputPlaceholder'
                             onChange={(e) => setIconpackUrl(e.target.value)}
-                            placeholder="Icon Pack URL"
+                            placeholder="https://example.com/icon-pack.json"
                         />
 
                     </div>
@@ -81,7 +93,7 @@ const AddIconPack = () => {
                         <NiceBack />
 
                         <NiceButton
-                            label="Add"
+                            label={id ? "Save" : "Add"}
                             className="bg-buttonSuccess text-buttonText"
                             onClick={saveSettings}
                         />
