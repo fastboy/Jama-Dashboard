@@ -1,7 +1,7 @@
 {
   "iconProvider": "pl.potrykus.jama-dashboard.dashboard-icons",
   "iconPack": "Jama-Dashboard Services",
-  "iconPackVersion": "1.6.0",
+  "iconPackVersion": "1.7.0",
   "packDeveloper": "Jama-Dashboard",
   "credit": {
     "name": "Dashboard Icons",
@@ -22,7 +22,7 @@
     { "iconName": "Nextcloud", "iconId": "nextcloud", "iconUrl": "nextcloud.svg" },
     { "iconName": "Nginx Proxy Manager", "iconId": "nginx-proxy-manager", "iconUrl": "nginx-proxy-manager.svg" },
     { "iconName": "OPNsense", "iconId": "opnsense", "iconUrl": "opnsense.svg" },
-    { "iconName": "Portainer", "iconId": "portainer", "iconUrl": "portainer.svg" },
+    { "iconName": "Portainer", "iconId": "portainer", "iconUrl": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons@main/png/portainer.png" },
     { "iconName": "Proxmox", "iconId": "proxmox", "iconUrl": "proxmox.svg" },
     { "iconName": "PufferPanel", "iconId": "pufferpanel", "iconUrl": "pufferpanel.svg" },
     { "iconName": "Uptime Kuma", "iconId": "uptime-kuma", "iconUrl": "uptime-kuma.svg" }
